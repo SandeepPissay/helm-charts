@@ -35,3 +35,8 @@ extraEnvs:
       secretKeyRef:
         name: elastic-credentials
         key: password
+
+tolerations:
+  - key: null
+    operator: Exists
+    effect: "NoSchedule"

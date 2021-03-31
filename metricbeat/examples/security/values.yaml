@@ -97,6 +97,20 @@ deployment:
           - state_container
         period: 10s
         hosts: ["${KUBE_STATE_METRICS_HOSTS}"]
+      - module: prometheus
+        period: 30s
+        metricsets: ["collector"]
+        hosts: ["vsphere-csi-controller.kube-system:2112"]
+        metrics_path: /metrics
+        use_types: true
+        rate_counters: true
+      - module: prometheus
+        period: 30s
+        metricsets: ["collector"]
+        hosts: ["vsphere-csi-controller.kube-system:2113"]
+        metrics_path: /metrics
+        use_types: true
+        rate_counters: true
       output.elasticsearch:
         username: '${ELASTICSEARCH_USERNAME}'
         password: '${ELASTICSEARCH_PASSWORD}'
