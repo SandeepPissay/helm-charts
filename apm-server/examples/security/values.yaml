@@ -2,6 +2,13 @@ apmConfig:
   apm-server.yml: |
     apm-server:
       host: "0.0.0.0:8200"
+      jaeger:
+        grpc:
+          enabled: true
+          host: "0.0.0.0:14250"
+        http:
+          enabled: true
+          host: "0.0.0.0:14268"
     queue: {}
     output.elasticsearch:
       username: '${ELASTICSEARCH_USERNAME}'
@@ -27,3 +34,18 @@ extraEnvs:
       secretKeyRef:
         name: elastic-credentials
         key: password
+
+service:
+  ports:
+  - name: http
+    port: 8200
+    protocol: TCP
+    targetPort: 8200
+  - name: jaeger-grpc
+    port: 14250
+    protocol: TCP
+    targetPort: jaeger-grpc
+  - name: jaeger-http
+    port: 14268
+    protocol: TCP
+    targetPort: jaeger-http
