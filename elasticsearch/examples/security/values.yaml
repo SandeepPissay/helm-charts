@@ -36,3 +36,10 @@ secretMounts:
   - name: elastic-certificates
     secretName: elastic-certificates
     path: /usr/share/elasticsearch/config/certs
+
+volumeClaimTemplate:
+  storageClassName: vsan-default-storage-policy
+  accessModes: [ "ReadWriteOnce" ]
+  resources:
+    requests:
+      storage: 30Gi

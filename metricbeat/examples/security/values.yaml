@@ -1,4 +1,5 @@
 daemonset:
+  enabled: false
   extraEnvs:
     - name: 'ELASTICSEARCH_USERNAME'
       valueFrom:
@@ -97,14 +98,31 @@ deployment:
           - state_container
         period: 10s
         hosts: ["${KUBE_STATE_METRICS_HOSTS}"]
+      - module: prometheus
+        period: 30s
+        metricsets: ["collector"]
+        hosts: ["vsphere-csi-controller.vmware-system-csi:2112"]
+        metrics_path: /metrics
+        use_types: true
+        rate_counters: true
+      - module: prometheus
+        period: 30s
+        metricsets: ["collector"]
+        hosts: ["vsphere-csi-controller.vmware-system-csi:2113"]
+        metrics_path: /metrics
+        use_types: true
+        rate_counters: true
       output.elasticsearch:
         username: '${ELASTICSEARCH_USERNAME}'
         password: '${ELASTICSEARCH_PASSWORD}'
         protocol: https
-        hosts: ["security-master:9200"]
+        hosts: ["security-master.observability:9200"]
         ssl.certificate_authorities:
           - /usr/share/metricbeat/config/certs/elastic-certificate.pem
   secretMounts:
   - name: elastic-certificate-pem
     secretName: elastic-certificate-pem
     path: /usr/share/metricbeat/config/certs
+
+# Setting empty rediness probe as the default is not working.
+readinessProbe:

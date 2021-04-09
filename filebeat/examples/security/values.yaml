@@ -15,7 +15,7 @@ filebeatConfig:
       username: '${ELASTICSEARCH_USERNAME}'
       password: '${ELASTICSEARCH_PASSWORD}'
       protocol: https
-      hosts: ["security-master:9200"]
+      hosts: ["security-master.observability:9200"]
       ssl.certificate_authorities:
         - /usr/share/filebeat/config/certs/elastic-certificate.pem
 
@@ -35,3 +35,35 @@ extraEnvs:
       secretKeyRef:
         name: elastic-credentials
         key: password
+
+tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+    operator: Exists
+  - effect: NoSchedule
+    key: kubeadmNode
+    operator: Equal
+    value: master
+
+clusterRoleRules:
+- apiGroups: ['policy']
+  resources: ['podsecuritypolicies']
+  verbs:     ['use']
+  resourceNames:
+  - wcp-privileged-psp
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  - nodes
+  - pods
+  verbs:
+  - get
+  - list
+  - watch
+
+nodeSelector:
+  node-role.kubernetes.io/master: ""
+
+daemonset:
+  hostNetworking: true
