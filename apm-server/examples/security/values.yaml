@@ -1,13 +1,21 @@
 apmConfig:
   apm-server.yml: |
+    name: tkc-dev2
     apm-server:
       host: "0.0.0.0:8200"
+      jaeger:
+        grpc:
+          enabled: true
+          host: "0.0.0.0:14250"
+        http:
+          enabled: true
+          host: "0.0.0.0:14268"
     queue: {}
     output.elasticsearch:
       username: '${ELASTICSEARCH_USERNAME}'
       password: '${ELASTICSEARCH_PASSWORD}'
       protocol: https
-      hosts: ["security-master:9200"]
+      hosts: ["192.168.123.4:9200"]
       ssl.certificate_authorities:
         - /usr/share/apm-server/config/certs/elastic-certificate.pem
 
@@ -27,3 +35,18 @@ extraEnvs:
       secretKeyRef:
         name: elastic-credentials
         key: password
+
+service:
+  ports:
+  - name: http
+    port: 8200
+    protocol: TCP
+    targetPort: 8200
+  - name: jaeger-grpc
+    port: 14250
+    protocol: TCP
+    targetPort: jaeger-grpc
+  - name: jaeger-http
+    port: 14268
+    protocol: TCP
+    targetPort: jaeger-http

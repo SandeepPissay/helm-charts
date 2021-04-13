@@ -1,5 +1,6 @@
 filebeatConfig:
   filebeat.yml: |
+    name: tkc-dev2
     filebeat.inputs:
     - type: container
       paths:

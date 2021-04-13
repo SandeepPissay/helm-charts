@@ -28,6 +28,14 @@ spec:
       protocol: TCP
       name: http
       targetPort: {{ .Values.service.port }}
+    - name: jaeger-grpc
+      port: 14250
+      protocol: TCP
+      targetPort: jaeger-grpc
+    - name: jaeger-http
+      port: 14268
+      protocol: TCP
+      targetPort: jaeger-http
   selector:
     app: {{ .Chart.Name }}
     release: {{ .Release.Name | quote }}

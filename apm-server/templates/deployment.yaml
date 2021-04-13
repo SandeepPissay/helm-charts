@@ -99,6 +99,10 @@ spec:
         ports:
           - containerPort: {{ .Values.service.port }}
             name: http
+          - containerPort: 14250
+            name: jaeger-grpc
+          - containerPort: 14268
+            name: jaeger-http
 {{- if .Values.lifecycle }}
         lifecycle:
 {{ toYaml .Values.lifecycle | indent 10 }}
