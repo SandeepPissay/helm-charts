@@ -15,7 +15,7 @@ filebeatConfig:
       username: '${ELASTICSEARCH_USERNAME}'
       password: '${ELASTICSEARCH_PASSWORD}'
       protocol: https
-      hosts: ["security-master:9200"]
+      hosts: ["192.168.123.4:9200"]
       ssl.certificate_authorities:
         - /usr/share/filebeat/config/certs/elastic-certificate.pem
 
@@ -35,3 +35,25 @@ extraEnvs:
       secretKeyRef:
         name: elastic-credentials
         key: password
+
+tolerations:
+  - key: null
+    operator: Exists
+    effect: "NoSchedule"
+
+clusterRoleRules:
+- apiGroups: ['policy']
+  resources: ['podsecuritypolicies']
+  verbs:     ['use']
+  resourceNames:
+  - vmware-system-privileged
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  - nodes
+  - pods
+  verbs:
+  - get
+  - list
+  - watch
