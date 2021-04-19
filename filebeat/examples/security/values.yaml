@@ -1,5 +1,6 @@
 filebeatConfig:
   filebeat.yml: |
+    name: sv-cluster
     filebeat.inputs:
     - type: container
       paths:
