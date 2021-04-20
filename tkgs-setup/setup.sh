@@ -26,7 +26,7 @@ then
 	exit 1
 fi
 
-export KUBECONFIG=${SV_NAMESPACE}###${TKC_NAME}-kubeconfig
+export KUBECONFIG=/tmp/${SV_NAMESPACE}###${TKC_NAME}-kubeconfig
 
 kubectl create ns $TKC_NAMESPACE && \
 	kubectl -n $TKC_NAMESPACE create secret generic elastic-certificate-pem --from-file=/wcp-elk/elasticsearch/examples/security/elastic-certificate.pem && \
