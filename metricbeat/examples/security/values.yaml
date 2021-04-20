@@ -87,6 +87,7 @@ deployment:
   # such as metricbeat.yml for deployment
   metricbeatConfig:
     metricbeat.yml: |
+      name: sv-cluster
       metricbeat.modules:
       - module: kubernetes
         enabled: true

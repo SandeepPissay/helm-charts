@@ -1,5 +1,6 @@
 apmConfig:
   apm-server.yml: |
+    name: sv-cluster
     apm-server:
       host: "0.0.0.0:8200"
       jaeger:
