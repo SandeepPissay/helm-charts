@@ -22,5 +22,5 @@ fi
 # Set KUBECONFIG to TKC.
 export KUBECONFIG=/tmp/${SV_NAMESPACE}###${TKC_NAME}-kubeconfig
 
-sed "s/%ELASTICSEARCH_IPADDRESS%/$ES_IPADDRESS/g" values.yaml > /tmp/${SV_NAMESPACE}###${TKC_NAME}-values.yaml && \
-	helm -n $TKC_NAMESPACE upgrade --wait --debug --timeout=1200s --install --values /tmp/${SV_NAMESPACE}###${TKC_NAME}-values.yaml helm-filebeat-security ../../
+sed "s/%ELASTICSEARCH_IPADDRESS%/$ES_IPADDRESS/g" values.yaml > /tmp/${SV_NAMESPACE}###${TKC_NAME}-filebeat-values.yaml && \
+	helm -n $TKC_NAMESPACE upgrade --wait --debug --timeout=1200s --install --values /tmp/${SV_NAMESPACE}###${TKC_NAME}-filebeat-values.yaml helm-filebeat-security ../../
