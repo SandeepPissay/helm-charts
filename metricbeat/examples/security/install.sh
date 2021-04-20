@@ -23,4 +23,6 @@ fi
 export KUBECONFIG=/tmp/${SV_NAMESPACE}###${TKC_NAME}-kubeconfig
 
 sed "s/%ELASTICSEARCH_IPADDRESS%/$ES_IPADDRESS/g" values.yaml > /tmp/${SV_NAMESPACE}###${TKC_NAME}-values.yaml && \
-	helm -n $TKC_NAMESPACE upgrade --wait --debug --timeout=1200s --install --values /tmp/${SV_NAMESPACE}###${TKC_NAME}-values.yaml helm-filebeat-security ../../
+	helm -n $TKC_NAMESPACE repo add stable https://charts.helm.sh/stable && \
+	helm -n $TKC_NAMESPACE dependency update ../../ && \
+	helm -n $TKC_NAMESPACE upgrade --wait --debug --timeout=1200s --install --values /tmp/${SV_NAMESPACE}###${TKC_NAME}-values.yaml helm-metricbeat-security ../../

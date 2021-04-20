@@ -22,6 +22,6 @@ fi
 export KUBECONFIG=/tmp/${SV_NAMESPACE}###${TKC_NAME}-kubeconfig
 
 # Ignore helm failure
-helm -n $TKC_NAMESPACE del helm-filebeat-security
+helm -n $TKC_NAMESPACE del helm-metricbeat-security
 
 exit 0
