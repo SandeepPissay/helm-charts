@@ -10,7 +10,7 @@ export SV_NAMESPACE=$1
 export TKC_NAME=$2
 export TKC_NAMESPACE=$3
 
-kubectl -n $SV_NAMESPACE get secret ${TKC_NAME}-kubeconfig -o=jsonpath='{.data.value}' | base64 -d > /tmp/${TKC_NAME}-kubeconfig
+kubectl -n $SV_NAMESPACE get secret ${TKC_NAME}-kubeconfig -o=jsonpath='{.data.value}' | base64 -d > /tmp/${SV_NAMESPACE}###${TKC_NAME}-kubeconfig
 
 if [ $? -ne 0 ]
 then
@@ -18,7 +18,15 @@ then
 	exit 1
 fi
 
-export KUBECONFIG=/tmp/${TKC_NAME}-kubeconfig
+cat /tmp/${SV_NAMESPACE}###${TKC_NAME}-kubeconfig
+grep "${TKC_NAME}-admin" /tmp/${SV_NAMESPACE}###${TKC_NAME}-kubeconfig
+if [ $? -ne 0 ]
+then
+	echo "kubeconfig for $TKC_NAME in $SV_NAMESPACE is incorrect."
+	exit 1
+fi
+
+export KUBECONFIG=/tmp/${SV_NAMESPACE}###${TKC_NAME}-kubeconfig
 
 kubectl delete ns $TKC_NAMESPACE
 exit 0

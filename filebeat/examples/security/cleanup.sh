@@ -18,6 +18,14 @@ then
 	exit 1
 fi
 
+cat /tmp/${SV_NAMESPACE}###${TKC_NAME}-kubeconfig
+grep "${TKC_NAME}-admin" /tmp/${SV_NAMESPACE}###${TKC_NAME}-kubeconfig
+if [ $? -ne 0 ]
+then
+	echo "kubeconfig for $TKC_NAME in $SV_NAMESPACE is incorrect."
+	exit 1
+fi
+
 # Set KUBECONFIG to TKC.
 export KUBECONFIG=/tmp/${SV_NAMESPACE}###${TKC_NAME}-kubeconfig
 
