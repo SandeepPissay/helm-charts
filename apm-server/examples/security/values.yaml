@@ -1,6 +1,6 @@
 apmConfig:
   apm-server.yml: |
-    name: tkc-dev2
+    name: %TKC_NAME%
     apm-server:
       host: "0.0.0.0:8200"
       jaeger:

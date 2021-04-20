@@ -87,7 +87,7 @@ deployment:
   # such as metricbeat.yml for deployment
   metricbeatConfig:
     metricbeat.yml: |
-      name: tkc-dev2
+      name: %TKC_NAME%
       metricbeat.modules:
       - module: kubernetes
         enabled: true
