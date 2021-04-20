@@ -16,7 +16,7 @@ filebeatConfig:
       username: '${ELASTICSEARCH_USERNAME}'
       password: '${ELASTICSEARCH_PASSWORD}'
       protocol: https
-      hosts: ["192.168.123.4:9200"]
+      hosts: ["%ELASTICSEARCH_IPADDRESS%:9200"]
       ssl.certificate_authorities:
         - /usr/share/filebeat/config/certs/elastic-certificate.pem
 
